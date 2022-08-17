@@ -5,7 +5,8 @@ export default function Cell({ item, draw }) {
   const { winner } = useContext(GameContext);
   return (
     <div
-      className="flex justify-center items-center font-bold text-6xl"
+      className="cursor-pointer bg-blue-600 flex justify-center items-center font-bold text-6xl
+      hover:bg-blue-400"
       onClick={() => {
         if (!winner) draw(item.id);
       }}

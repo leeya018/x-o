@@ -28,7 +28,7 @@ export default function Board({}) {
     updateItems(newItems);
   }
   return (
-    <div className="grid grid-cols-3 grid-rows-3 w-80 h-80">
+    <div className="grid gap-2 bg-black grid-cols-3 grid-rows-3 w-96 h-96">
       {items.map((arr) => {
         return arr.map((item) => {
           return <Cell key={item.id} item={item} draw={draw} />;

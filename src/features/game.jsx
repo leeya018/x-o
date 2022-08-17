@@ -67,6 +67,8 @@ export function Game({}) {
     checkIfBoardIsFull();
   }, [items]);
 
+  // is there any way to check those functions in more easy way?
+  // not using any for loopes, just reduce filter map every ...etc
   function checkDiagnols() {
     let diagnol1 = [];
     let diagnol2 = [];
@@ -123,6 +125,8 @@ export function Game({}) {
     for (const arr of items) {
       for (const item of arr) {
         if (item.init == "") {
+          // is this the rigth place to change the state?
+          // or should I do that  function pure?
           setIsBoardFull(false);
           return;
         }
@@ -133,6 +137,7 @@ export function Game({}) {
 
   console.log({ winner: winner !== "", isBoardFull });
 
+  // is there any other componets that I can extract in this stage or not?
   return (
     <GameContext.Provider
       value={{
@@ -145,11 +150,11 @@ export function Game({}) {
         winner,
       }}
     >
-      <div className="flex flex-col justify-center items-center w-full h-full bg-red-300">
+      <div className=" select-none flex flex-col justify-center items-center w-full h-full bg-red-300">
         <button
           className={`${
             winner !== "" || isBoardFull ? "visible" : "invisible"
-          } px-3 py-2 font-bold text-xl border-2 border-black rounded-md bg-slate-500 `}
+          } px-3 py-2 font-bold text-xl border-2 border-black rounded-md bg-blue-600 hover:bg-blue-400 `}
           onClick={restartGame}
         >
           restart
@@ -157,7 +162,8 @@ export function Game({}) {
         <div className="w-[50%] h-20 flex justify-center items-center font-bold text-5xl text-blue-500 border-none">{`${
           winner ? `${winner} is the winner` : ""
         }`}</div>
-        <h1 className="font-bold text-2xl mb-2">game of x and o </h1>
+        <p className="font-bold text-lg mb-5">{`${turn} is playing`}</p>
+        <h1 className="font-bold text-2xl mb-2">X-O GAME </h1>
 
         {/* board */}
         <Board />
