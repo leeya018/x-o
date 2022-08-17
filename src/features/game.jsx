@@ -147,18 +147,19 @@ export function Game({}) {
         <button
           className={`${
             winner !== "" || isBoardFull ? "visible" : "invisible"
-          } px-3 py-2 font-bold text-xl border-2 border-black rounded-md bg-slate-500`}
+          } px-3 py-2 font-bold text-xl border-2 border-black rounded-md bg-slate-500 `}
           onClick={restartGame}
         >
           restart
         </button>
-        <div className="w-[50%] h-20 flex justify-center items-center font-bold text-5xl text-blue-500">{`${
+        <div className="w-[50%] h-20 flex justify-center items-center font-bold text-5xl text-blue-500 border-none">{`${
           winner ? `${winner} is the winner` : ""
         }`}</div>
         <h1 className="font-bold text-2xl mb-2">game of x and o </h1>
 
         {/* board */}
         <Board />
+        <p className="absolute rigth-2 bottom-2">Author @Lee Yahav</p>
       </div>
     </GameContext.Provider>
   );
