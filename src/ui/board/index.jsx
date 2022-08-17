@@ -8,7 +8,8 @@ export default function Board({}) {
 
   useEffect(() => {
     if (checkWin()) {
-      setWinner(turn);
+      // why is that happend
+      setWinner(turn == turnEnum.x ? turnEnum.o : turnEnum.x);
     }
   }, [items]);
 
