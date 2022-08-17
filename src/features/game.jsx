@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Board from "@/ui/board";
 import { v4 as uuidv4 } from "uuid";
 
@@ -52,12 +52,18 @@ export const turnEnum = {
   o: "O",
 };
 console.log(initialItems);
+
 export const GameContext = React.createContext();
 
 export function Game({}) {
   const [items, setItems] = useState(initialItems);
   const [turn, setTurn] = useState(turnEnum.x);
   const [winner, setWinner] = useState("");
+  const [isBoardFull, setIsBoardFull] = useState(false);
+
+  useEffect(() => {
+    checkIfBoardIsFull();
+  }, [items]);
 
   function checkDiagnols() {
     let diagnol1 = [];
@@ -110,6 +116,21 @@ export function Game({}) {
     setTurn(turnEnum.x);
     setWinner("");
   }
+  function checkIfBoardIsFull() {
+    console.log("is board full fulction is called ");
+    for (const arr of items) {
+      for (const item of arr) {
+        if (item.init == "") {
+          setIsBoardFull(false);
+          return;
+        }
+      }
+    }
+    setIsBoardFull(true);
+  }
+
+  console.log({ winner: winner !== "", isBoardFull });
+
   return (
     <GameContext.Provider
       value={{
@@ -125,8 +146,8 @@ export function Game({}) {
       <div className="flex flex-col justify-center items-center w-full h-full bg-red-300">
         <button
           className={`${
-            !winner ? "invisible" : ""
-          } px-3 py-2 font-bold text-xl border-2 border-black rounded-md`}
+            winner !== "" || isBoardFull ? "visible" : "invisible"
+          } px-3 py-2 font-bold text-xl border-2 border-black rounded-md bg-slate-500`}
           onClick={restartGame}
         >
           restart
