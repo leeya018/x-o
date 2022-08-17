@@ -62,6 +62,8 @@ export function Game({}) {
   const [isBoardFull, setIsBoardFull] = useState(false);
 
   useEffect(() => {
+    // is that the rigth way to do it ?
+    //  do I have to use the state?
     checkIfBoardIsFull();
   }, [items]);
 
