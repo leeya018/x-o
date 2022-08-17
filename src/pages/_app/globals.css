@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+h1 {
+  @apply text-5xl prose-2xl prose-invert;
+}
+
+div {
+  @apply border-2 border-black;
+}
