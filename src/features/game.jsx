@@ -1,71 +1,60 @@
 import React, { useState, useEffect } from "react";
-import Board from "@/ui/board";
-
-export const turnEnum = {
-  x: "X",
-  o: "O",
-};
-
-const initialItems = [
-  ["", "", ""],
-  ["", "", ""],
-  ["", "", ""],
-];
-export const GameContext = React.createContext();
-
 export function Game({}) {
-  const [items, setItems] = useState(initialItems);
-  const [turn, setTurn] = useState(turnEnum.x);
-  const [winner, setWinner] = useState("");
-  const [isBoardFull, setIsBoardFull] = useState(false);
+  const [items, setItems] = useState(Array(9).fill(""));
+  const [turn, setTurn] = useState("x");
 
-  // useEffect(() => {
-  // is that the rigth way to do it ?
-  //  do I have to use the state?
-  // setIsBoardFull(checkIfBoardIsFull());
-  //checkIfWin()
-  // }, [items]);
+  const Cell = ({ num }) => {
+    const handleClick = () => {
+      if (items[num] !== "") return;
+      let newItems = [...items];
 
-  // function restartGame() {
-  //   setItems(initialItems);
-  //   setTurn(turnEnum.x);
-  //   setWinner("");
-  // }
+      newItems[num] = turn;
+      setItems(newItems);
 
-  // console.log({ winner: winner !== "", isBoardFull });
-
-  // is there any other componets that I can extract in this stage or not?
-  return (
-    <GameContext.Provider
-      value={{
-        items,
-        updateItems: setItems,
-        turn,
-        updateTurn: setTurn,
-        // checkWin,
-        setWinner,
-        winner,
-      }}
-    >
-      <div className=" select-none flex flex-col justify-center items-center w-full h-full bg-red-300">
-        <button
-          className={`${
-            winner !== "" || isBoardFull ? "visible" : "invisible"
-          } px-3 py-2 font-bold text-xl border-2 border-black rounded-md bg-blue-600 hover:bg-blue-400 `}
-          // onClick={restartGame}
-        >
-          restart
-        </button>
-        <div className="w-[50%] h-20 flex justify-center items-center font-bold text-5xl text-blue-500 border-none">{`${
-          winner ? `${winner} is the winner` : ""
-        }`}</div>
-        <p className="font-bold text-lg mb-5">{`${turn} is playing`}</p>
-        <h1 className="font-bold text-2xl mb-2">X-O GAME </h1>
-
-        {/* board */}
-        <Board />
-        <p className="absolute rigth-2 bottom-2">Author @Lee Yahav</p>
+      turn == "x" ? setTurn("y") : setTurn("x");
+    };
+    return (
+      <div
+        className="border-2 border-black flex justify-center items-center"
+        onClick={handleClick}
+      >
+        {items[num]}
       </div>
-    </GameContext.Provider>
+    );
+  };
+  console.log(items);
+
+  const checkWin = () => {
+    combos = {
+      rows: [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+      ],
+      cols: [
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+      ],
+      cross: [
+        [0, 4, 8],
+        [2, 4, 6],
+      ],
+    };
+  };
+  return (
+    <div className="contianer flex justify-center">
+      <div className=" grid grid-rows-3 grid-cols-3 gap-1 w-32 h-32">
+        <Cell num={0} />
+        <Cell num={1} />
+        <Cell num={2} />
+        <Cell num={3} />
+        <Cell num={4} />
+        <Cell num={5} />
+        <Cell num={6} />
+        <Cell num={7} />
+        <Cell num={8} />
+      </div>
+    </div>
   );
 }

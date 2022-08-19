@@ -14,12 +14,13 @@ export default function Board({}) {
   //   }
   // }, [items]);
 
-  function draw(id) {
-    const newItems = items.filter((item) => (item.id == id ? turn : item));
-    // updateItems(newItems);
+  function draw(chosenId, getIdFunct) {
+    let cellId = getIdFunct();
+    const newItems = items.map((row) =>
+      row.map((cell) => (chosenId == cellId ? turn : cell))
+    );
+    updateItems(newItems);
   }
-  console.log(items);
-  console.log(items[0].length);
 
   return (
     <div className="grid gap-2 bg-black grid-cols-3 grid-rows-3 w-96 h-96">
