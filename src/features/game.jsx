@@ -1,58 +1,16 @@
 import React, { useState, useEffect } from "react";
 import Board from "@/ui/board";
-import { v4 as uuidv4 } from "uuid";
-
-const initialItems = [
-  [
-    {
-      id: uuidv4(),
-      init: "",
-    },
-    {
-      id: uuidv4(),
-      init: "",
-    },
-    {
-      id: uuidv4(),
-      init: "",
-    },
-  ],
-  [
-    {
-      id: uuidv4(),
-      init: "",
-    },
-    {
-      id: uuidv4(),
-      init: "",
-    },
-    {
-      id: uuidv4(),
-      init: "",
-    },
-  ],
-  [
-    {
-      id: uuidv4(),
-      init: "",
-    },
-    {
-      id: uuidv4(),
-      init: "",
-    },
-    {
-      id: uuidv4(),
-      init: "",
-    },
-  ],
-];
 
 export const turnEnum = {
   x: "X",
   o: "O",
 };
-console.log(initialItems);
 
+const initialItems = [
+  ["", "", ""],
+  ["", "", ""],
+  ["", "", ""],
+];
 export const GameContext = React.createContext();
 
 export function Game({}) {
@@ -61,81 +19,20 @@ export function Game({}) {
   const [winner, setWinner] = useState("");
   const [isBoardFull, setIsBoardFull] = useState(false);
 
-  useEffect(() => {
-    // is that the rigth way to do it ?
-    //  do I have to use the state?
-    checkIfBoardIsFull();
-  }, [items]);
+  // useEffect(() => {
+  // is that the rigth way to do it ?
+  //  do I have to use the state?
+  // setIsBoardFull(checkIfBoardIsFull());
+  //checkIfWin()
+  // }, [items]);
 
-  // is there any way to check those functions in more easy way?
-  // not using any for loopes, just reduce filter map every ...etc
-  function checkDiagnols() {
-    let diagnol1 = [];
-    let diagnol2 = [];
-    for (let i = 0; i < items.length; i++) {
-      for (let j = 0; j < items[0].length; j++) {
-        if (i == j) diagnol1.push(items[i][j]);
-        if (i + j == 2) diagnol2.push(items[i][j]);
-      }
-    }
-    let isSame1 = diagnol1.every(
-      (item) => item.init == items[0][0].init && items[0][0].init !== ""
-    );
-    let isSame2 = diagnol2.every(
-      (item) => item.init == items[0][2].init && items[0][2].init !== ""
-    );
-    return isSame1 || isSame2;
-  }
-  function checkRows() {
-    let isWin = false;
-    for (const arr of items) {
-      isWin =
-        isWin ||
-        arr.every((item) => item.init == arr[0].init && arr[0].init !== "");
-    }
-    return isWin;
-  }
+  // function restartGame() {
+  //   setItems(initialItems);
+  //   setTurn(turnEnum.x);
+  //   setWinner("");
+  // }
 
-  function checkCols() {
-    let isWin = false;
-    let col = [];
-    let j = 0;
-    for (let i = 0; i < items.length; i++) {
-      for (j = 0; j < items[0].length; j++) {
-        col.push(items[j][i]);
-      }
-      isWin =
-        isWin ||
-        col.every((item) => item.init == col[0].init && col[0].init !== "");
-      col = [];
-    }
-    return isWin;
-  }
-  function checkWin() {
-    return checkDiagnols() || checkRows() || checkCols();
-  }
-
-  function restartGame() {
-    setItems(initialItems);
-    setTurn(turnEnum.x);
-    setWinner("");
-  }
-  function checkIfBoardIsFull() {
-    console.log("is board full fulction is called ");
-    for (const arr of items) {
-      for (const item of arr) {
-        if (item.init == "") {
-          // is this the rigth place to change the state?
-          // or should I do that  function pure?
-          setIsBoardFull(false);
-          return;
-        }
-      }
-    }
-    setIsBoardFull(true);
-  }
-
-  console.log({ winner: winner !== "", isBoardFull });
+  // console.log({ winner: winner !== "", isBoardFull });
 
   // is there any other componets that I can extract in this stage or not?
   return (
@@ -145,7 +42,7 @@ export function Game({}) {
         updateItems: setItems,
         turn,
         updateTurn: setTurn,
-        checkWin,
+        // checkWin,
         setWinner,
         winner,
       }}
@@ -155,7 +52,7 @@ export function Game({}) {
           className={`${
             winner !== "" || isBoardFull ? "visible" : "invisible"
           } px-3 py-2 font-bold text-xl border-2 border-black rounded-md bg-blue-600 hover:bg-blue-400 `}
-          onClick={restartGame}
+          // onClick={restartGame}
         >
           restart
         </button>
