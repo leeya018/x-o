@@ -49,8 +49,6 @@ export function Game({}) {
     };
     for (const key in combos) {
       for (const combo of combos[key]) {
-        // console.log(items);
-        // console.log(items[combo[0]], items[combo[1]], items[combo[2]]);
         if (
           items[combo[0]] === items[combo[1]] &&
           items[combo[1]] === items[combo[2]] &&
@@ -63,8 +61,25 @@ export function Game({}) {
     return false;
   };
 
+  const isFull = () => {
+    return items.every((item) => item !== "");
+  };
+  const restartGame = () => {
+    setItems(Array(9).fill(""));
+    setTurn("x");
+    setWinner("");
+  };
+
   return (
     <div className="contianer flex flex-col items-center">
+      {(winner || isFull()) && (
+        <button
+          className="border-2 border-black rounded-md"
+          onClick={restartGame}
+        >
+          restart
+        </button>
+      )}
       <div className=" grid grid-rows-3 grid-cols-3 gap-1 w-32 h-32">
         <Cell num={0} />
         <Cell num={1} />
