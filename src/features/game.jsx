@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import Cell from "@/ui/cell";
+
 export function Game({}) {
   const [items, setItems] = useState(Array(9).fill(""));
   const [turn, setTurn] = useState("x");
@@ -10,24 +12,14 @@ export function Game({}) {
     }
   }, [items]);
 
-  const Cell = ({ num }) => {
-    const handleClick = () => {
-      if (items[num] !== "" || winner) return;
-      let newItems = [...items];
+  const handleClick = (num) => {
+    if (items[num] !== "" || winner) return;
+    let newItems = [...items];
 
-      newItems[num] = turn;
-      setItems(newItems);
+    newItems[num] = turn;
+    setItems(newItems);
 
-      turn == "x" ? setTurn("y") : setTurn("x");
-    };
-    return (
-      <div
-        className="border-2 border-black flex justify-center items-center"
-        onClick={handleClick}
-      >
-        {items[num]}
-      </div>
-    );
+    turn == "x" ? setTurn("y") : setTurn("x");
   };
 
   const checkWin = () => {
@@ -81,15 +73,9 @@ export function Game({}) {
         </button>
       )}
       <div className=" grid grid-rows-3 grid-cols-3 gap-1 w-32 h-32">
-        <Cell num={0} />
-        <Cell num={1} />
-        <Cell num={2} />
-        <Cell num={3} />
-        <Cell num={4} />
-        <Cell num={5} />
-        <Cell num={6} />
-        <Cell num={7} />
-        <Cell num={8} />
+        {items.map((item, index) => (
+          <Cell key={index} item={item} onClick={() => handleClick(index)} />
+        ))}
       </div>
       <div>{winner !== "" && <span>{`winner is ${winner}`}</span>}</div>
     </div>

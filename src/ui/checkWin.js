@@ -1,3 +1,5 @@
+// form mark is the array was 2 dimentional 
+
 function isHoriz(cells, player) {
   return cells.filter((row) => row.every((cell) => cell === player)).length;
 }
