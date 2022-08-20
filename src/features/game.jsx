@@ -2,10 +2,17 @@ import React, { useState, useEffect } from "react";
 export function Game({}) {
   const [items, setItems] = useState(Array(9).fill(""));
   const [turn, setTurn] = useState("x");
+  const [winner, setWinner] = useState("");
+  useEffect(() => {
+    console.log("render use effect");
+    if (checkWin()) {
+      setWinner(turn);
+    }
+  }, [items]);
 
   const Cell = ({ num }) => {
     const handleClick = () => {
-      if (items[num] !== "") return;
+      if (items[num] !== "" || winner) return;
       let newItems = [...items];
 
       newItems[num] = turn;
@@ -22,10 +29,9 @@ export function Game({}) {
       </div>
     );
   };
-  console.log(items);
 
   const checkWin = () => {
-    combos = {
+    const combos = {
       rows: [
         [0, 1, 2],
         [3, 4, 5],
@@ -41,9 +47,24 @@ export function Game({}) {
         [2, 4, 6],
       ],
     };
+    for (const key in combos) {
+      for (const combo of combos[key]) {
+        // console.log(items);
+        // console.log(items[combo[0]], items[combo[1]], items[combo[2]]);
+        if (
+          items[combo[0]] === items[combo[1]] &&
+          items[combo[1]] === items[combo[2]] &&
+          items[combo[2]] !== ""
+        ) {
+          return true;
+        }
+      }
+    }
+    return false;
   };
+
   return (
-    <div className="contianer flex justify-center">
+    <div className="contianer flex flex-col items-center">
       <div className=" grid grid-rows-3 grid-cols-3 gap-1 w-32 h-32">
         <Cell num={0} />
         <Cell num={1} />
@@ -55,6 +76,7 @@ export function Game({}) {
         <Cell num={7} />
         <Cell num={8} />
       </div>
+      <div>{winner !== "" && <span>{`winner is ${winner}`}</span>}</div>
     </div>
   );
 }
