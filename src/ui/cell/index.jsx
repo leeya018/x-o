@@ -4,7 +4,8 @@ import { GameContext } from "@/features/game";
 export default function Cell({ item, onClick }) {
   return (
     <div
-      className="border-2 border-black flex justify-center items-center"
+      className="cursor-pointer bg-blue-600 flex justify-center items-center font-bold text-6xl
+      hover:bg-blue-400"
       onClick={onClick}
     >
       {item}

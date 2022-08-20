@@ -3,7 +3,7 @@ import Cell from "@/ui/cell";
 
 export function Game({}) {
   const [items, setItems] = useState(Array(9).fill(""));
-  const [turn, setTurn] = useState("x");
+  const [turn, setTurn] = useState("X");
   const [winner, setWinner] = useState("");
   useEffect(() => {
     console.log("render use effect");
@@ -19,7 +19,7 @@ export function Game({}) {
     newItems[num] = turn;
     setItems(newItems);
 
-    turn == "x" ? setTurn("y") : setTurn("x");
+    turn == "X" ? setTurn("O") : setTurn("X");
   };
 
   const checkWin = () => {
@@ -58,26 +58,30 @@ export function Game({}) {
   };
   const restartGame = () => {
     setItems(Array(9).fill(""));
-    setTurn("x");
+    setTurn("X");
     setWinner("");
   };
 
   return (
-    <div className="contianer flex flex-col items-center">
+    <div className=" select-none flex flex-col justify-center items-center w-full h-full bg-red-300">
+      <h1>tic tac toe game</h1>
+      <span className="font-bold text-lg">{`turn of ${turn}`}</span>
       {(winner || isFull()) && (
         <button
-          className="border-2 border-black rounded-md"
+          className="px-3 py-2 font-bold text-xl border-2 border-black rounded-md bg-blue-600 hover:bg-blue-400 mt-3"
           onClick={restartGame}
         >
           restart
         </button>
       )}
-      <div className=" grid grid-rows-3 grid-cols-3 gap-1 w-32 h-32">
+      <div className="w-[50%] h-20 flex justify-center items-center font-bold text-5xl text-blue-500 border-none">
+        {winner !== "" && <span>{`winner is ${winner}`}</span>}
+      </div>
+      <div className=" grid gap-2 bg-black grid-cols-3 grid-rows-3 w-96 h-96">
         {items.map((item, index) => (
           <Cell key={index} item={item} onClick={() => handleClick(index)} />
         ))}
       </div>
-      <div>{winner !== "" && <span>{`winner is ${winner}`}</span>}</div>
     </div>
   );
 }
